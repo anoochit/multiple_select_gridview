@@ -18,6 +18,8 @@ class HomeController extends GetxController {
 
   RxList<bool> listCheckBox = <bool>[].obs;
 
+  RxInt chckBoxItems = 0.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -32,5 +34,15 @@ class HomeController extends GetxController {
   void selectAll() {
     listCheckBox.replaceRange(
         0, listCheckBox.length, List.filled(listCheckBox.length, true));
+    calculateCheckBox();
+  }
+
+  calculateCheckBox() {
+    chckBoxItems.value = listCheckBox.where((p) => (p == true)).length;
+  }
+
+  void setCheckboxValue(int index, bool value) {
+    listCheckBox[index] = value;
+    calculateCheckBox();
   }
 }

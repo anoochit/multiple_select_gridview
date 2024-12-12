@@ -27,6 +27,14 @@ class HomeView extends GetView<HomeController> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
+                      onPressed: () {
+                        //
+                      },
+                      child:
+                          Text('Select ${controller.chckBoxItems.value} items'),
+                    ),
+                    const Spacer(),
+                    TextButton(
                         onPressed: () {
                           controller.selectAll();
                         },
@@ -45,9 +53,11 @@ class HomeView extends GetView<HomeController> {
           // grid
           Expanded(
             child: GridView.builder(
+              padding: const EdgeInsets.all(4.0),
               itemCount: controller.listData.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3),
+                crossAxisCount: 2,
+              ),
               itemBuilder: (context, index) {
                 final item = controller.listData[index];
 
@@ -64,14 +74,15 @@ class HomeView extends GetView<HomeController> {
 
                         // checkbox
                         Positioned(
-                            right: 0,
+                            top: 4,
+                            right: 4,
                             child: Obx(
                               () => Visibility(
                                 visible: controller.checkboxVisible.value,
                                 child: Checkbox(
                                   value: controller.listCheckBox[index],
                                   onChanged: (value) {
-                                    controller.listCheckBox[index] = value!;
+                                    controller.setCheckboxValue(index, value!);
                                   },
                                 ),
                               ),
