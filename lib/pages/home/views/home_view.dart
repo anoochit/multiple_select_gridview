@@ -19,7 +19,7 @@ class HomeView extends GetView<HomeController> {
           // toolbar
           Obx(
             () => Visibility(
-              visible: controller.checkboxVisible.value,
+              visible: controller.isCheckboxVisible,
               child: Container(
                 height: kToolbarHeight,
                 color: Theme.of(context).colorScheme.primaryContainer,
@@ -31,17 +31,17 @@ class HomeView extends GetView<HomeController> {
                         //
                       },
                       child:
-                          Text('Select ${controller.chckBoxItems.value} items'),
+                          Text('Select ${controller.selectedItemCount} items'),
                     ),
                     const Spacer(),
                     TextButton(
                         onPressed: () {
-                          controller.selectAll();
+                          controller.selectAllItems();
                         },
                         child: const Text('Select All')),
                     TextButton(
                       onPressed: () {
-                        controller.setCheckboxVisible(false);
+                        controller.toggleCheckboxVisibility(false);
                       },
                       child: const Text('Cancel'),
                     )
@@ -65,7 +65,7 @@ class HomeView extends GetView<HomeController> {
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   child: InkWell(
                     onLongPress: () {
-                      controller.setCheckboxVisible(true);
+                      controller.toggleCheckboxVisibility(true);
                     },
                     child: Stack(
                       children: [
@@ -78,11 +78,12 @@ class HomeView extends GetView<HomeController> {
                             right: 4,
                             child: Obx(
                               () => Visibility(
-                                visible: controller.checkboxVisible.value,
+                                visible: controller.isCheckboxVisible,
                                 child: Checkbox(
-                                  value: controller.listCheckBox[index],
+                                  value: controller.itemCheckStates[index],
                                   onChanged: (value) {
-                                    controller.setCheckboxValue(index, value!);
+                                    controller.updateItemCheckState(
+                                        index, value!);
                                   },
                                 ),
                               ),
